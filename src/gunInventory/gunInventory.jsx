@@ -1,10 +1,65 @@
 import React, { Component } from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
+import data from '../mock'
 class gunInventory extends Component {
     constructor(props){
         super(props)
-        this.state={arr:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]}
+        this.state={
+            data:data.data
+            /* data:[
+                {id:1,name:'钥匙',dec:'全新',imgurl:'./images/key1.png',price:100.00},
+                {id:2,name:'钥匙',dec:'久经沙场',imgurl:'./images/key2.png',price:100.00},
+                {id:3,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:4,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:5,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:6,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:7,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:8,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:9,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:10,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:11,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:12,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:13,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:14,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:15,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:16,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:17,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:18,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:19,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:20,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:21,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:22,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:23,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:24,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:25,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:26,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:27,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+            ] */
+        }
     }
     render() {
         return (
@@ -66,10 +121,10 @@ class gunInventory extends Component {
                         <h5>刷新库存</h5>
                     </div>
                 </div>
-                <div className="gunList">
+                <div className="gunlist">
                     <div className="gun-wrapper">
                         {/* 引入武器卡片的组件 */}
-                           <GunCard numbers={this.state.arr}/>
+                           <GunCard numbers={this.state.data}/>
                     </div>     
                 </div>
             </div>

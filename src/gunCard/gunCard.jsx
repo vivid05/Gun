@@ -13,14 +13,14 @@ const content = (
 );
 function Guncard(props){
     const numbers = props.numbers;
-    const listItems = numbers.map((number) =>
-        <Popover key={number} placement="topLeft" title={text} content={content} arrowPointAtCenter>
+    const listItems = numbers.map((item) =>
+        <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
             <div className='wrapper'>
                 <div className="gun-items">
-                    <img src="./images/gun1.png" alt=""/>
-                    <p>久经沙场{number}</p>
-                    <p>暗影双匕（★）|蓝钢</p>
-                    <p>￥375.27</p>
+                    <img src={item.imgurl} alt=""/>
+                    <p>{item.dec}</p>
+                    <p>{item.name}</p>
+                    <p>￥{item.price}</p>
                 </div> 
             </div>   
         </Popover>
