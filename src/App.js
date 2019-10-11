@@ -4,6 +4,7 @@ import './App.css';
 import Tips from './tips/tips';
 import Trade from './trade/trade';
 import Guninventory from './gunInventory/gunInventory';
+import Footer from './footer/footer'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Tips/>
       <Trade/>
       <Guninventory/>
+      <Footer/>
     </div>
   );
 }
