@@ -1,0 +1,29 @@
+.header{
+    height: 64px;
+    background-color: #fff;
+    box-shadow: 0 3px 3px 0 rgba(0,34,77,.1);
+}
+.layout{
+    width: 1200px;
+    margin: 0 auto;
+}
+.TextLink{
+    display: block;
+    height: 64px;
+    line-height: 64px;
+    margin-left: 20px;
+    color: #f90;
+}
+.login{
+    line-height: 64px;
+}
+.login>img{
+    height: 30px;
+    width: 30px;
+}
+.login>span{
+    color: #f60;
+    font-size: 16px;
+    text-decoration: underline;
+    margin: 0 4px;
+}
