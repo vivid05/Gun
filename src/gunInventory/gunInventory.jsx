@@ -10,7 +10,8 @@ class gunInventory extends Component {
             weapondata:data.userdata,
             userid:1,
             rankid:1,
-            price_1:''
+            price_1:'',
+            /* childrenMsg:'' */
         }
         this.handleclick=this.handleclick.bind(this)
         this.handlerank=this.handlerank.bind(this)
@@ -21,6 +22,7 @@ class gunInventory extends Component {
     }
     componentDidMount(){ 
         this.setState({weapondata:this.state.weapondata.sort(this.compare('price',1))})
+        //console.log(this.props)
         //console.log(this.state.weapondata)
     }
     handleclick(e){
@@ -82,6 +84,13 @@ class gunInventory extends Component {
             } 
         }
         
+    }
+    getChildrenMsg = (result, msg) => {
+        //console.log(msg)
+        this.setState({
+            childrenMsg: msg
+        })
+        this.props.parent(this,msg)
     }
     render() {
         return (
@@ -146,7 +155,7 @@ class gunInventory extends Component {
                 <div className="gunlist">
                     <div className="gun-wrapper">
                         {/* 引入武器卡片的组件 */}
-                           <GunCard numbers={this.state.weapondata}/>
+                           <GunCard parent={this.getChildrenMsg} numbers={this.state.weapondata}/>
                     </div>     
                 </div>
             </div>

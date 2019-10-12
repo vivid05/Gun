@@ -54,11 +54,17 @@
     z-index: 1000;
 }
 .content-item>p{
+    display: none;
     height: 264px;
     line-height: 264px;
     font-size: 14px;
     text-align: center;
     color: #8590a6;
+}
+.show{
+    height: 280px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .content-price{
     margin: 0 10px;

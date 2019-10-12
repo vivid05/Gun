@@ -1,6 +1,30 @@
 import React, { Component } from 'react';
+import Guncardsmall from '../guncardsmall/guncardsmall'
 import './trade.css'
 class trade extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            data:[
+                {id:1,name:'钥匙',dec:'全新',imgurl:'./images/key1.png',price:100.00},
+                {id:2,name:'钥匙',dec:'久经沙场',imgurl:'./images/key1.png',price:50.00},
+                {id:3,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:40.00},
+                {id:4,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
+                {id:5,name:'步枪',dec:'久经沙场',imgurl:'./images/key1.png',price:50.00},
+            ],
+            list1:[],
+            list2:[]
+        }
+    }
+    componentDidMount(){
+        
+        //console.log(this.props)
+    }
+    UNSAFE_componentWillReceiveProps(){
+        
+        this.setState({list1:this.props.list1})
+        this.setState({list2:this.props.list2})
+    }
     render() {
         return (
             <div className="layout trade">
@@ -26,6 +50,9 @@ class trade extends Component {
                 <div className="content-item">
                     <span>用户报价</span>
                     <p>在 '用户库存' 中选择你要换出的饰品</p>
+                    <div className="show">
+                        <Guncardsmall numbers={this.state.list1}/>
+                    </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>
                         <p className="fr">自动补差</p>
@@ -34,6 +61,9 @@ class trade extends Component {
                 <div className="content-item">
                     <span>机器人报价</span>
                     <p>在 '机器人库存' 中选择你要换入的饰品</p>
+                    <div className="show">
+                        <Guncardsmall numbers={this.state.list2}/>
+                    </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>
                         <p className="fr">自动补差</p>
