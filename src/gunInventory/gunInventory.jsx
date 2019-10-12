@@ -9,12 +9,19 @@ class gunInventory extends Component {
             Alldata:data.userdata,
             weapondata:data.userdata,
             userid:1,
+            rankid:1,
             price_1:''
         }
         this.handleclick=this.handleclick.bind(this)
+        this.handlerank=this.handlerank.bind(this)
         this.search=this.search.bind(this)
         this.price_1Search=this.price_1Search.bind(this)
         this.price_2Search=this.price_2Search.bind(this)
+        this.compare=this.compare.bind(this)
+    }
+    componentDidMount(){ 
+        this.setState({weapondata:this.state.weapondata.sort(this.compare('price',1))})
+        //console.log(this.state.weapondata)
     }
     handleclick(e){
         let id=e.currentTarget.getAttribute("data-id");   
@@ -26,6 +33,11 @@ class gunInventory extends Component {
             this.setState({Alldata:data.userdata}) 
         }
         this.setState({userid:e.target.getAttribute("data-id")})
+    }
+    handlerank(e){
+        let id=e.currentTarget.getAttribute("data-rankid")
+        this.setState({rankid:id})
+        this.setState({weapondata:this.state.weapondata.sort(this.compare('price',id))})
     }
     search(e){
         //this.setState({keyworld:e.target.value})
@@ -54,6 +66,22 @@ class gunInventory extends Component {
             this.setState({weapondata:newarr})
         }
    
+    }
+    compare(property,rev){
+        if(rev==2){
+           return function(a,b){
+                var value1 = a[property];
+                var value2 = b[property];
+                return value1 - value2;
+            } 
+        }else if(rev==1){
+            return function(a,b){
+                var value1 = a[property];
+                var value2 = b[property];
+                return value2 - value1;
+            } 
+        }
+        
     }
     render() {
         return (
@@ -100,10 +128,10 @@ class gunInventory extends Component {
                 </div>
                 <div className="rank">
                     <ul>
-                        <li className="rankActive">价格↓</li>
-                        <li>价格↑</li>
-                        <li>磨损值↓</li>
-                        <li>磨损值↑</li>
+                        <li data-rankid='1' onClick={this.handlerank} className={this.state.rankid==1?'rankActive':''}>价格↓</li>
+                        <li data-rankid='2' onClick={this.handlerank} className={this.state.rankid==2?'rankActive':''}>价格↑</li>
+                        <li data-rankid='3' onClick={this.handlerank} className={this.state.rankid==3?'rankActive':''}>磨损值↓</li>
+                        <li data-rankid='4' onClick={this.handlerank} className={this.state.rankid==4?'rankActive':''}>磨损值↑</li>
                     </ul>
                     <div className="rank-search">
                         <input type="text" onChange={this.search} placeholder="搜索"/>
