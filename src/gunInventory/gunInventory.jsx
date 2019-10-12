@@ -6,68 +6,27 @@ class gunInventory extends Component {
     constructor(props){
         super(props)
         this.state={
-            data:data.data
-            /* data:[
-                {id:1,name:'钥匙',dec:'全新',imgurl:'./images/key1.png',price:100.00},
-                {id:2,name:'钥匙',dec:'久经沙场',imgurl:'./images/key2.png',price:100.00},
-                {id:3,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:4,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:5,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:6,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:7,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:8,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:9,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:10,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:11,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:12,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:13,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:14,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:15,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:16,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:17,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:18,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:19,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:20,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:21,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:22,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:23,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:24,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:25,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:26,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:27,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:28,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-            ] */
+            weapondata:data.userdata,
+            userid:1
         }
+        this.handleclick=this.handleclick.bind(this)
+    }
+    handleclick(e){
+        let id=e.currentTarget.getAttribute("data-id");   
+        if(id==2){
+           this.setState({weapondata:data.robotdata}) 
+        }else if(id==1){
+            this.setState({weapondata:data.userdata}) 
+        }
+        this.setState({userid:e.currentTarget.getAttribute("data-id")})
     }
     render() {
         return (
             <div className="layout inventory">
                 <div className="inventory-tabs">
                     <ul>
-                        <li>用户库存</li>
-                        <li className="active">机器人库存</li>
+                        <li onClick={this.handleclick} data-id='1' className={this.state.userid==1?'active':''}>用户库存</li>
+                        <li onClick={this.handleclick} data-id='2' className={this.state.userid==2?'active':''}>机器人库存</li>
                         <li>使用Tab键快速切换</li>
                     </ul>
                 </div>
@@ -80,10 +39,10 @@ class gunInventory extends Component {
                                 所有类型 <span className="caret"></span>
                                 </button>
                                 <ul className="dropdown-menu">
-                                <li><a href="#">所有类型</a></li>
-                                <li><a href="#">武器</a></li>
-                                <li><a href="#">武器</a></li>
-                                <li><a href="#">武器</a></li>
+                                    <li><a href="#">所有类型</a></li>
+                                    <li><a href="#">武器</a></li>
+                                    <li><a href="#">武器</a></li>
+                                    <li><a href="#">武器</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -124,7 +83,7 @@ class gunInventory extends Component {
                 <div className="gunlist">
                     <div className="gun-wrapper">
                         {/* 引入武器卡片的组件 */}
-                           <GunCard numbers={this.state.data}/>
+                           <GunCard numbers={this.state.weapondata}/>
                     </div>     
                 </div>
             </div>
