@@ -6,19 +6,35 @@ class gunInventory extends Component {
     constructor(props){
         super(props)
         this.state={
+            Alldata:data.userdata,
             weapondata:data.userdata,
-            userid:1
+            userid:1,
         }
         this.handleclick=this.handleclick.bind(this)
+        this.search=this.search.bind(this)
     }
     handleclick(e){
         let id=e.currentTarget.getAttribute("data-id");   
         if(id==2){
-           this.setState({weapondata:data.robotdata}) 
+           this.setState({weapondata:data.robotdata})
+           this.setState({Alldata:data.robotdata}) 
         }else if(id==1){
-            this.setState({weapondata:data.userdata}) 
+            this.setState({weapondata:data.userdata})
+            this.setState({Alldata:data.userdata}) 
         }
-        this.setState({userid:e.currentTarget.getAttribute("data-id")})
+        this.setState({userid:e.target.getAttribute("data-id")})
+    }
+    search(e){
+        //this.setState({keyworld:e.target.value})
+        let keyworld=e.target.value;
+        if(keyworld==''){
+            this.setState({weapondata:this.state.Alldata})
+        }else{
+            let newarr=this.state.Alldata.filter(item=>{
+                return item.name==keyworld
+            })
+            this.setState({weapondata:newarr})
+        }
     }
     render() {
         return (
@@ -71,7 +87,7 @@ class gunInventory extends Component {
                         <li>磨损值↑</li>
                     </ul>
                     <div className="rank-search">
-                        <input type="text" placeholder="搜索"/>
+                        <input type="text" onChange={this.search} placeholder="搜索"/>
                     </div>
                     <div className="money">
                         <span>¥</span><input type="text"/>
