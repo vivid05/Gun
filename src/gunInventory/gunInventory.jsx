@@ -9,9 +9,12 @@ class gunInventory extends Component {
             Alldata:data.userdata,
             weapondata:data.userdata,
             userid:1,
+            price_1:''
         }
         this.handleclick=this.handleclick.bind(this)
         this.search=this.search.bind(this)
+        this.price_1Search=this.price_1Search.bind(this)
+        this.price_2Search=this.price_2Search.bind(this)
     }
     handleclick(e){
         let id=e.currentTarget.getAttribute("data-id");   
@@ -35,6 +38,22 @@ class gunInventory extends Component {
             })
             this.setState({weapondata:newarr})
         }
+    }
+    price_1Search(e){
+        this.setState({price_1:e.target.value})
+    }
+    price_2Search(e){
+        let price_1=this.state.price_1;
+        let price_2=e.target.value;
+        if(price_2==''){
+            this.setState({weapondata:this.state.Alldata})
+        }else{
+            let newarr=this.state.Alldata.filter(item=>{
+                return item.price>=price_1&&item.price<=price_2
+            })
+            this.setState({weapondata:newarr})
+        }
+   
     }
     render() {
         return (
@@ -90,9 +109,9 @@ class gunInventory extends Component {
                         <input type="text" onChange={this.search} placeholder="搜索"/>
                     </div>
                     <div className="money">
-                        <span>¥</span><input type="text"/>
+                        <span>¥</span><input value={this.state.price_1} onChange={this.price_1Search} type="text"/>
                         <i>-</i>
-                        <span>¥</span><input type="text"/>
+                        <span>¥</span><input onChange={this.price_2Search} type="text"/>
                         <h5>刷新库存</h5>
                     </div>
                 </div>
