@@ -5,25 +5,15 @@ class trade extends Component {
     constructor(props){
         super(props)
         this.state={
-            data:[
-                {id:1,name:'钥匙',dec:'全新',imgurl:'./images/key1.png',price:100.00},
-                {id:2,name:'钥匙',dec:'久经沙场',imgurl:'./images/key1.png',price:50.00},
-                {id:3,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:40.00},
-                {id:4,name:'步枪',dec:'久经沙场',imgurl:'./images/gun1.png',price:100.00},
-                {id:5,name:'步枪',dec:'久经沙场',imgurl:'./images/key1.png',price:50.00},
-            ],
-            list1:[],
-            list2:[]
+            userlist:[], //用户库存列表
+            robotlist:[] //机器人库存列表
         }
     }
-    componentDidMount(){
-        
-        //console.log(this.props)
-    }
+
+    //监听props数据变化，实时更新传过来的数据
     UNSAFE_componentWillReceiveProps(){
-        
-        this.setState({list1:this.props.list1})
-        this.setState({list2:this.props.list2})
+        this.setState({userlist:this.props.userlist})
+        this.setState({robotlist:this.props.robotlist})
     }
     render() {
         return (
@@ -51,7 +41,8 @@ class trade extends Component {
                     <span>用户报价</span>
                     <p>在 '用户库存' 中选择你要换出的饰品</p>
                     <div className="show">
-                        <Guncardsmall numbers={this.state.list1}/>
+                        {/* 引入武器小卡片组件并传入用户库存列表 */}
+                        <Guncardsmall numbers={this.state.userlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>
@@ -62,7 +53,8 @@ class trade extends Component {
                     <span>机器人报价</span>
                     <p>在 '机器人库存' 中选择你要换入的饰品</p>
                     <div className="show">
-                        <Guncardsmall numbers={this.state.list2}/>
+                        {/* 引入武器小卡片组件并传入机器人库存列表 */}
+                        <Guncardsmall numbers={this.state.robotlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>

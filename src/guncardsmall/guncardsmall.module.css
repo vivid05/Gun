@@ -5,7 +5,7 @@
     position: relative;
     display: inline-block;
     box-sizing: border-box;
-    
+    text-align: center;
     width: 100px;
     height: 100px;
     margin-top: 20px;

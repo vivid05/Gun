@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import  './header.moudule.css'
+import styles from  './header.module.css'
 class header extends Component {
     render() {
         return (
-            <div className="header">
-                <div className="layout">
-                    <a href="#" className="fl">
+            <div className={styles.header}>
+                <div className={styles.layout}>
+                    <a href="#" className={styles.fl}>
                         <img src="./images/logo.png" alt=""/>
                     </a>
-                    <a href="#" className="fl TextLink">前往旧版</a>
-                    <a href="#" className="fr login">
+                    <a href="#" className={styles.TextLink}>前往旧版</a>
+                    <a href="#" className={styles.login}>
                         <img src="./images/login.svg" alt=""/>
                         <span>请通过Steam登录</span>
                     </a>

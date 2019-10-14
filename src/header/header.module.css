@@ -1,3 +1,7 @@
+
+.fl{
+    float: left;
+}
 .header{
     height: 64px;
     background-color: #fff;
@@ -10,11 +14,13 @@
 .TextLink{
     display: block;
     height: 64px;
+    float: left;
     line-height: 64px;
     margin-left: 20px;
     color: #f90;
 }
 .login{
+    float: right;
     line-height: 64px;
 }
 .login>img{

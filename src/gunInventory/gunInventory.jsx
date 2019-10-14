@@ -6,12 +6,11 @@ class gunInventory extends Component {
     constructor(props){
         super(props)
         this.state={
-            Alldata:data.userdata,
+            Alldata:data.userdata, //模拟数据
             weapondata:data.userdata,
-            userid:1,
-            rankid:1,
-            price_1:'',
-            /* childrenMsg:'' */
+            userid:1, //用户和机器人库存识别id
+            rankid:1, //价格升降序识别id
+            price_1:'', //第一个价格输入框的数据
         }
         this.handleclick=this.handleclick.bind(this)
         this.handlerank=this.handlerank.bind(this)
@@ -20,11 +19,13 @@ class gunInventory extends Component {
         this.price_2Search=this.price_2Search.bind(this)
         this.compare=this.compare.bind(this)
     }
+
+    //页面加载执行价格默认降序排序
     componentDidMount(){ 
         this.setState({weapondata:this.state.weapondata.sort(this.compare('price',1))})
-        //console.log(this.props)
-        //console.log(this.state.weapondata)
     }
+
+    //切换用户库存和机器人库存
     handleclick(e){
         let id=e.currentTarget.getAttribute("data-id");   
         if(id==2){
@@ -36,11 +37,15 @@ class gunInventory extends Component {
         }
         this.setState({userid:e.target.getAttribute("data-id")})
     }
+
+    //按照价格排序
     handlerank(e){
         let id=e.currentTarget.getAttribute("data-rankid")
         this.setState({rankid:id})
         this.setState({weapondata:this.state.weapondata.sort(this.compare('price',id))})
     }
+
+    //按照关键词搜索
     search(e){
         //this.setState({keyworld:e.target.value})
         let keyworld=e.target.value;
@@ -53,6 +58,8 @@ class gunInventory extends Component {
             this.setState({weapondata:newarr})
         }
     }
+
+    //根据价格区间筛选
     price_1Search(e){
         this.setState({price_1:e.target.value})
     }
@@ -69,6 +76,8 @@ class gunInventory extends Component {
         }
    
     }
+
+    //比较函数
     compare(property,rev){
         if(rev==2){
            return function(a,b){
@@ -85,12 +94,14 @@ class gunInventory extends Component {
         }
         
     }
+
+    //获取自组件的数据，并带参执行父组件的函数
     getChildrenMsg = (result, msg) => {
         //console.log(msg)
         this.setState({
             childrenMsg: msg
         })
-        this.props.parent(this,msg)
+        this.props.getChildrenMsg(this,msg)
     }
     render() {
         return (

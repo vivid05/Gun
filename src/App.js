@@ -11,19 +11,19 @@ class App extends Component{
     super(props)
     this.state={
       childrenMsg:[],
-      list1:[],
-      list2:[]
+      userlist:[], //用户报价列表
+      robotlist:[] //机器人报价列表
     }
 }
+ //此方法传递给子组件调用
   getChildrenMsg = (result, msg) => {
     if(msg.type==1){
-      this.state.list1.push(msg)
+      this.state.userlist.push(msg)
     }else if(msg.type==2){
-      this.state.list2.push(msg)
+      this.state.robotlist.push(msg)
     }
-    this.setState({childrenMsg:this.state.list1})
-    this.setState({childrenMsg:this.state.list2})
-    console.log(this.state.list1)
+    this.setState({childrenMsg:this.state.userlist})
+    this.setState({childrenMsg:this.state.robotlist})
     
   }
   render(){
@@ -31,8 +31,8 @@ class App extends Component{
       <div className="App">
         <Header/>
         <Tips/>
-        <Trade list1={this.state.list1} list2={this.state.list2}/>
-        <Guninventory parent={this.getChildrenMsg}/>
+        <Trade userlist={this.state.userlist} robotlist={this.state.robotlist}/>
+        <Guninventory getChildrenMsg={this.getChildrenMsg}/>
         <Footer/>
       </div>
     );

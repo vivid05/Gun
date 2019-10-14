@@ -4,52 +4,38 @@ import Popover from 'antd/es/popover';
 import 'antd/es/popover/style/css';
 import 'antd/es/button/style/css';
 
-const text = <span>Title</span>;
-const content = (
-  <div>
-    <p>Content</p>
-    <p>Content</p>
-  </div>
-);
-function Guncard(props){
-    const numbers = props.numbers
-    const listItems = numbers.map((item) =>
-        <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
-            <div onClick={toParent.bind(this,item)} className='wrapper'>
-                <div  className="gun-items">
-                    <img src={item.imgurl} alt=""/>
-                    <p>{item.dec}</p>
-                    <p>{item.name}</p>
-                    <p>￥{item.price}</p>
-                </div> 
-            </div>   
-        </Popover>
-    );
-    function toParent(data){
-        props.parent(this,data)
-    }
-    return (
-        [listItems]
-    );
-}
-function toCart(e){
-    console.log(e)
-}
-
 class gunCard extends Component {
     constructor(props){
         super(props)
+        this.toParent=this.toParent.bind(this)
     }
-    toCart(data){
-        console.log(data)
-    }
+    toParent(data){
+        this.props.parent(this,data)
+    } 
     render() {
-        return (
-            <Guncard parent={this.props.parent} numbers={this.props.numbers}/>          
+        const text = <span>Title</span>;
+        const content = (
+            <div>
+                <p>Content</p>
+                <p>Content</p>
+            </div>
         );
-        /* return(
-            [this.state.listItems]
-        ) */
+        const numbers = this.props.numbers
+        const listItems = numbers.map((item) =>
+            <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
+                <div onClick={this.toParent.bind(this,item)} className='wrapper'>
+                    <div  className="gun-items">
+                        <img src={item.imgurl} alt=""/>
+                        <p>{item.dec}</p>
+                        <p>{item.name}</p>
+                        <p>￥{item.price}</p>
+                    </div> 
+                </div>   
+            </Popover> 
+        ) 
+        return (
+            [listItems]         
+        );
     }
 }
 
