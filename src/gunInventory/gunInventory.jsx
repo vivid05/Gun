@@ -95,7 +95,7 @@ class gunInventory extends Component {
         
     }
 
-    //获取自组件的数据，并带参执行父组件的函数
+    //获取子组件的数据，并带参执行父组件的函数
     getChildrenMsg = (result, msg) => {
         this.props.getChildrenMsg(this,msg)
         for(var i=0;i<this.state.weapondata.length;i++){

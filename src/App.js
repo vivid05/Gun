@@ -15,7 +15,7 @@ class App extends Component{
       robotlist:[] //机器人报价列表
     }
 }
- //此方法传递给子组件调用
+ //此方法由子组件调用
   getChildrenMsg = (result, msg) => {
     if(msg.type==1){
       this.state.userlist.push(msg)
@@ -23,8 +23,7 @@ class App extends Component{
       this.state.robotlist.push(msg)
     }
     this.setState({childrenMsg:this.state.userlist})
-    this.setState({childrenMsg:this.state.robotlist})
-    
+    this.setState({childrenMsg:this.state.robotlist}) 
   }
   render(){
     return (

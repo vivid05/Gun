@@ -6,28 +6,50 @@ class trade extends Component {
         super(props)
         this.state={
             userlist:[], //用户库存列表
-            robotlist:[] //机器人库存列表
+            robotlist:[], //机器人库存列表
+            user_total:0,
+            robot_total:0
         }
     }
 
     //监听props数据变化，实时更新传过来的数据
     UNSAFE_componentWillReceiveProps(){
+        console.log(123)
+        let userarr=[0]
+        let robotarr=[0]
+        for(var i=0;i<this.props.userlist.length;i++){
+            userarr.push(this.props.userlist[i].price)
+        }
+        for(var i=0;i<this.props.robotlist.length;i++){
+            robotarr.push(this.props.robotlist[i].price)
+        }
+        let usertotal=userarr.reduce((pre,cur)=>{
+            return pre+cur
+        })
+        let robottotal=robotarr.reduce((pre,cur)=>{
+            return pre+cur
+        })
+        this.setState({user_total:usertotal})
+        this.setState({robot_total:robottotal})
         this.setState({userlist:this.props.userlist})
         this.setState({robotlist:this.props.robotlist})
     }
 
+    
     //点击根据id删除列表中的数据
-    delcard = (result,msg) => {    
+    delcard = (result,msg) => {   
         if(msg.type==1){ 
           for(var i=0;i<this.state.userlist.length;i++){
               if(this.state.userlist[i].id==msg.id){
                   this.state.userlist.splice(i,1)
+                  this.state.user_total-=msg.price
               }
           }
         }else if(msg.type==2){
             for(var i=0;i<this.state.robotlist.length;i++){
                 if(this.state.robotlist[i].id==msg.id){
                     this.state.robotlist.splice(i,1)
+                    this.state.robot_total-=msg.price
                 }
             }
         }
@@ -64,7 +86,7 @@ class trade extends Component {
                         <Guncardsmall delcard={this.delcard} gunlist={this.state.userlist}/>
                     </div>
                     <div className="content-price">
-                        <p className="fl">总价：￥ 0.00</p>
+                        <p className="fl">总价：￥{this.state.user_total}</p>
                         <p className="fr">自动补差</p>
                     </div>
                 </div>
@@ -76,7 +98,7 @@ class trade extends Component {
                         <Guncardsmall delcard={this.delcard} gunlist={this.state.robotlist}/>
                     </div>
                     <div className="content-price">
-                        <p className="fl">总价：￥ 0.00</p>
+                        <p className="fl">总价：￥{this.state.robot_total}</p>
                         <p className="fr">自动补差</p>
                     </div>
                 </div>
