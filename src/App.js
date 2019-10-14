@@ -6,17 +6,6 @@ import Trade from './trade/trade';
 import Guninventory from './gunInventory/gunInventory';
 import Footer from './footer/footer'
 
-/* function App() {
-  return (
-    <div className="App">
-      <Header/>
-      <Tips/>
-      <Trade/>
-      <Guninventory/>
-      <Footer/>
-    </div>
-  );
-} */
 class App extends Component{
   constructor(props){
     super(props)
@@ -32,7 +21,6 @@ class App extends Component{
     }else if(msg.type==2){
       this.state.list2.push(msg)
     }
-    //this.state.list.push(msg)
     this.setState({childrenMsg:this.state.list1})
     this.setState({childrenMsg:this.state.list2})
     console.log(this.state.list1)
