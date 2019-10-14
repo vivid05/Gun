@@ -15,6 +15,25 @@ class trade extends Component {
         this.setState({userlist:this.props.userlist})
         this.setState({robotlist:this.props.robotlist})
     }
+
+    //点击根据id删除列表中的数据
+    delcard = (result,msg) => {    
+        if(msg.type==1){ 
+          for(var i=0;i<this.state.userlist.length;i++){
+              if(this.state.userlist[i].id==msg.id){
+                  this.state.userlist.splice(i,1)
+              }
+          }
+        }else if(msg.type==2){
+            for(var i=0;i<this.state.robotlist.length;i++){
+                if(this.state.robotlist[i].id==msg.id){
+                    this.state.robotlist.splice(i,1)
+                }
+            }
+        }
+        this.setState({childrenMsg:this.state.userlist})
+        this.setState({childrenMsg:this.state.robotlist})
+      } 
     render() {
         return (
             <div className="layout trade">
@@ -42,7 +61,7 @@ class trade extends Component {
                     <p>在 '用户库存' 中选择你要换出的饰品</p>
                     <div className="show">
                         {/* 引入武器小卡片组件并传入用户库存列表 */}
-                        <Guncardsmall numbers={this.state.userlist}/>
+                        <Guncardsmall delcard={this.delcard} gunlist={this.state.userlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>
@@ -54,7 +73,7 @@ class trade extends Component {
                     <p>在 '机器人库存' 中选择你要换入的饰品</p>
                     <div className="show">
                         {/* 引入武器小卡片组件并传入机器人库存列表 */}
-                        <Guncardsmall numbers={this.state.robotlist}/>
+                        <Guncardsmall delcard={this.delcard} gunlist={this.state.robotlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥ 0.00</p>

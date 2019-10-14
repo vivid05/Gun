@@ -9,8 +9,10 @@ class gunCard extends Component {
         super(props)
         this.toParent=this.toParent.bind(this)
     }
+
+    //加入仓库
     toParent(data){
-        this.props.parent(this,data)
+        this.props.getChildrenMsg(this,data)
     } 
     render() {
         const text = <span>Title</span>;
@@ -20,8 +22,8 @@ class gunCard extends Component {
                 <p>Content</p>
             </div>
         );
-        const numbers = this.props.numbers
-        const listItems = numbers.map((item) =>
+        const gunlist = this.props.gunlist
+        const listItems = gunlist.map((item) =>
             <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
                 <div onClick={this.toParent.bind(this,item)} className='wrapper'>
                     <div  className="gun-items">

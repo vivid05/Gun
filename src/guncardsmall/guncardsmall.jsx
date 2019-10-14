@@ -7,6 +7,15 @@ import 'antd/es/button/style/css';
 class gunCard extends Component {
     constructor(props){
         super(props)
+        this.state={
+            gunlist:props.gunlist
+        }
+        this.delcard=this.delcard.bind(this)
+    }
+
+    //点击删除对应列表项
+    delcard(data){
+        this.props.delcard(this,data) //触发父组件的delcard方法
     }
     render() {
         const text = <span>Title</span>;
@@ -16,10 +25,10 @@ class gunCard extends Component {
                 <p>Content</p>
             </div>
         );
-        const numbers = this.props.numbers;
-        const listItems = numbers.map((item) =>
+        const gunlist = this.props.gunlist;
+        const listItems = gunlist.map((item) =>
             <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
-                <div className={styles.wrapper}>
+                <div onClick={this.delcard.bind(this,item)} className={styles.wrapper}>
                     <div className={styles.gunitems}>
                         <img src={item.imgurl} alt=""/>
                         <p>￥{item.price}</p>

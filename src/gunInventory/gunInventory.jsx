@@ -97,11 +97,12 @@ class gunInventory extends Component {
 
     //获取自组件的数据，并带参执行父组件的函数
     getChildrenMsg = (result, msg) => {
-        //console.log(msg)
-        this.setState({
-            childrenMsg: msg
-        })
         this.props.getChildrenMsg(this,msg)
+        for(var i=0;i<this.state.weapondata.length;i++){
+            if(this.state.weapondata[i].id==msg.id){
+                this.state.weapondata.splice(i,1)
+            }
+        }
     }
     render() {
         return (
@@ -166,7 +167,7 @@ class gunInventory extends Component {
                 <div className="gunlist">
                     <div className="gun-wrapper">
                         {/* 引入武器卡片的组件 */}
-                           <GunCard parent={this.getChildrenMsg} numbers={this.state.weapondata}/>
+                           <GunCard getChildrenMsg={this.getChildrenMsg} gunlist={this.state.weapondata}/>
                     </div>     
                 </div>
             </div>
