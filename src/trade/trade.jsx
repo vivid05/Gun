@@ -14,7 +14,6 @@ class trade extends Component {
 
     //监听props数据变化，实时更新传过来的数据
     UNSAFE_componentWillReceiveProps(){
-        console.log(123)
         let userarr=[0]
         let robotarr=[0]
         for(var i=0;i<this.props.userlist.length;i++){
@@ -37,7 +36,8 @@ class trade extends Component {
 
     
     //点击根据id删除列表中的数据
-    delcard = (result,msg) => {   
+    delcard = (result,msg) => {
+        this.props.onChoose(this,msg)   
         if(msg.type==1){ 
           for(var i=0;i<this.state.userlist.length;i++){
               if(this.state.userlist[i].id==msg.id){

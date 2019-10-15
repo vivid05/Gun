@@ -16,6 +16,7 @@ class gunCard extends Component {
     //点击删除对应列表项
     delcard(data){
         this.props.delcard(this,data) //触发父组件的delcard方法
+        
     }
     render() {
         const text = <span>Title</span>;

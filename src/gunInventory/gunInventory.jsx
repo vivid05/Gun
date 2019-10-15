@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
-import data from '../mock'
+//import data from '../mock'
 class gunInventory extends Component {
     constructor(props){
         super(props)
         this.state={
-            Alldata:data.userdata, //模拟数据
-            weapondata:data.userdata,
+            data:props.GunList,
+            //Alldata:props.GunList.userdata, //模拟数据
+            //weapondata:props.GunList.userdata,
+            Alldata:props.userGunList,
+            weapondata:props.userGunList,
             userid:1, //用户和机器人库存识别id
             rankid:1, //价格升降序识别id
             price_1:'', //第一个价格输入框的数据
+            list:''
         }
         this.handleclick=this.handleclick.bind(this)
         this.handlerank=this.handlerank.bind(this)
@@ -24,16 +28,20 @@ class gunInventory extends Component {
     componentDidMount(){ 
         this.setState({weapondata:this.state.weapondata.sort(this.compare('price',1))})
     }
-
+    
     //切换用户库存和机器人库存
     handleclick(e){
         let id=e.currentTarget.getAttribute("data-id");   
         if(id==2){
-           this.setState({weapondata:data.robotdata})
-           this.setState({Alldata:data.robotdata}) 
+            this.setState({weapondata:this.props.robotGunList})
+            this.setState({Alldata:this.props.robotGunList}) 
+           //this.setState({weapondata:this.state.data.robotdata})
+           //this.setState({Alldata:this.state.data.robotdata}) 
         }else if(id==1){
-            this.setState({weapondata:data.userdata})
-            this.setState({Alldata:data.userdata}) 
+            this.setState({weapondata:this.props.userGunList})
+            this.setState({Alldata:this.props.userGunList}) 
+            //this.setState({weapondata:this.state.data.userdata})
+            //this.setState({Alldata:this.state.data.userdata}) 
         }
         this.setState({userid:e.target.getAttribute("data-id")})
     }
@@ -96,8 +104,8 @@ class gunInventory extends Component {
     }
 
     //获取子组件的数据，并带参执行父组件的函数
-    getChildrenMsg = (result, msg) => {
-        this.props.getChildrenMsg(this,msg)
+    ToTradeList = (result, msg) => {
+        this.props.onChoose(this,msg)
         for(var i=0;i<this.state.weapondata.length;i++){
             if(this.state.weapondata[i].id==msg.id){
                 this.state.weapondata.splice(i,1)
@@ -167,7 +175,7 @@ class gunInventory extends Component {
                 <div className="gunlist">
                     <div className="gun-wrapper">
                         {/* 引入武器卡片的组件 */}
-                           <GunCard getChildrenMsg={this.getChildrenMsg} gunlist={this.state.weapondata}/>
+                           <GunCard onChoose={this.ToTradeList} gunlist={this.state.weapondata} />
                     </div>     
                 </div>
             </div>
