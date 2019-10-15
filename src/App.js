@@ -30,6 +30,24 @@ class App extends Component{
     this.setState({childrenMsg:this.state.userlist})
     this.setState({childrenMsg:this.state.robotlist}) 
   }
+  
+//排序函数
+  compare(property,rev){
+    if(rev==2){
+       return function(a,b){
+            var value1 = a[property];
+            var value2 = b[property];
+            return value1 - value2;
+        } 
+    }else if(rev==1){
+        return function(a,b){
+            var value1 = a[property];
+            var value2 = b[property];
+            return value2 - value1;
+        } 
+    }
+    
+}
 
   //此方法由子组件调用
   ToGunlist=((result,msg)=>{
@@ -38,8 +56,8 @@ class App extends Component{
     }else if(msg.type==2){
       this.state.robotGunList.push(msg)
     }
-    this.setState({childrenMsg:this.state.userGunList})
-    this.setState({childrenMsg:this.state.robotGunList}) 
+    this.setState({userGunList:this.state.userGunList.sort(this.compare('price',1))})
+    this.setState({robotGunList:this.state.robotGunList.sort(this.compare('price',1))}) 
   })
 
   render(){

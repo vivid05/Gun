@@ -6,7 +6,6 @@ class gunInventory extends Component {
     constructor(props){
         super(props)
         this.state={
-            data:props.GunList,
             //Alldata:props.GunList.userdata, //模拟数据
             //weapondata:props.GunList.userdata,
             Alldata:props.userGunList,
