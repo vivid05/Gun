@@ -4,10 +4,7 @@ import './gunInventory.css'
 function GunInventory(props) {
     const [userid,setuserid] = useState(1)
     const [rankid,setrankid] = useState(1)
-    const [keyword,setkeyword] = useState('')
     const [price_1,setprice_1] = useState()
-    const [price_2,setprice_2] = useState()
-    const [searchList,setsearchlist] = useState([])
     const [gunList,setgunlist] = useState(props.GunList)  
 
     //切换用户和机器人库存列表
@@ -27,12 +24,10 @@ function GunInventory(props) {
     //根据关键词搜索
     const search=(e)=>{
         let keyword=e.target.value
-        setkeyword(keyword)
         let newarr=gunList.filter(item=>{
             return item.name==keyword
         })
-        props.search(this,newarr)
-          
+        props.search(this,newarr)      
     } 
 
     //加入到交易列表同时删除当前卡片
@@ -67,12 +62,12 @@ function GunInventory(props) {
         setprice_1(e.target.value)
     }
 
+    //通过价格区间筛选
     const price_2Search=(e)=>{
         let newarr=gunList.filter(item=>{
             return item.price>=price_1&&item.price<=e.target.value
         })
-        props.Pricesel(this,newarr)
-        //setsearchlist(newarr)  
+        props.Pricesel(this,newarr) 
     }
 
     return (

@@ -13,7 +13,8 @@ class gunCard extends Component {
     //加入仓库
     toParent(data){
         this.props.onChoose(this,data)
-    } 
+    }
+     
     render() {
         const text = <span>Title</span>;
         const content = (

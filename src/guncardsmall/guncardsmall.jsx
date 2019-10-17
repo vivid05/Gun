@@ -7,9 +7,6 @@ import 'antd/es/button/style/css';
 class gunCard extends Component {
     constructor(props){
         super(props)
-        this.state={
-            gunlist:props.gunlist
-        }
         this.delcard=this.delcard.bind(this)
     }
 
@@ -18,8 +15,7 @@ class gunCard extends Component {
         this.props.delcard(this,data) //触发父组件的delcard方法
         
     }
-
-    
+ 
     render() {
         const text = <span>Title</span>;
         const content = (

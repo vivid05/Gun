@@ -13,24 +13,25 @@ function App(props) {
   const [CurrentList,setCurrentList] = useState(userGunList) //初始化库存列表
   const [userid,setuserid] = useState(1) //初始化库存id
   const [KeywordfilterList,setkeywordfilterlist] = useState([]) //初始化关键词过滤库存列表
-  const [PricefilterList,setpricefilter] = useState([])
+  const [PricefilterList,setpricefilter] = useState([]) //初始化价格区间过滤库存列表
 
-  //根据相关条件过滤库存列表
+  //根据关键词过滤库存列表
   useEffect(()=>{
     if(KeywordfilterList.length==0){
       ToggleList()
     }else{
       setCurrentList(KeywordfilterList)
     }
-  },[KeywordfilterList])
+  },[KeywordfilterList,userGunList,robotGunList])
 
+  //根据价格区间过滤库存列表
   useEffect(()=>{
     if(PricefilterList.length==0){
       ToggleList()
     }else{
       setCurrentList(PricefilterList)
     }
-  },[PricefilterList])
+  },[PricefilterList,userGunList,robotGunList])
 
 
   //切换库存列表项
@@ -64,6 +65,7 @@ function App(props) {
 
   }
 
+  //根据价格区间筛选回调
   const Pricesel=(result,Newarr)=>{
     setpricefilter(Newarr)
   }
