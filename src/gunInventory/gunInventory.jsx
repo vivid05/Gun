@@ -31,7 +31,7 @@ function GunInventory(props) {
         let newarr=gunList.filter(item=>{
             return item.name==keyword
         })
-        props.search(this,newarr,keyword)
+        props.search(this,newarr)
           
     } 
 
@@ -71,7 +71,8 @@ function GunInventory(props) {
         let newarr=gunList.filter(item=>{
             return item.price>=price_1&&item.price<=e.target.value
         })
-        setsearchlist(newarr)  
+        props.Pricesel(this,newarr)
+        //setsearchlist(newarr)  
     }
 
     return (
@@ -136,7 +137,7 @@ function GunInventory(props) {
             <div className="gunlist">
                 <div className="gun-wrapper">
                     {/* 引入武器卡片的组件 */}
-                    <GunCard onChoose={ToTradeList} gunlist={searchList.length==0?props.GunList:searchList} />
+                    <GunCard onChoose={ToTradeList} gunlist={props.GunList} />
                 </div>     
             </div>
         </div>
