@@ -18,6 +18,8 @@ class gunCard extends Component {
         this.props.delcard(this,data) //触发父组件的delcard方法
         
     }
+
+    
     render() {
         const text = <span>Title</span>;
         const content = (

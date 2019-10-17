@@ -1,77 +1,73 @@
-import React, { Component } from 'react';
+import React, { Component,useState,useEffect } from 'react';
 import Header from './header/header'
 import './App.css';
 import Tips from './tips/tips';
 import Trade from './trade/trade';
 import Guninventory from './gunInventory/gunInventory';
 import Footer from './footer/footer'
-import data from './mock'
+import useBuyOperation from './Hooks/useBuyOperation.js'
 
-class App extends Component{
-  constructor(props){
-    super(props)
-    this.state={
-      userGunList:data.userdata, //用户库存列表
-      robotGunList:data.robotdata, //机器人库存列表
-      childrenMsg:[],
-      userlist:[], //用户报价列表
-      robotlist:[],//机器人报价列表
-      arr:[]
-    }
-}
+function App(props) {
+  const [userlist,robotlist,ToTradeListFun] = useBuyOperation.UseToTradeList()  //交易列表区操作Hook
+  const [userGunList,robotGunList,ToGunListFun] = useBuyOperation.UseToGunList() //库存列表区操作Hook
+  const [CurrentList,setCurrentList] = useState(userGunList) //初始化库存列表
+  const [userid,setuserid] = useState(1) //初始化库存id
+  const [filterList,setfilterlist] = useState([]) //初始化关键词过滤库存列表
+  const [keyword,setkeyword] = useState()  //初始化关键词
 
- //此方法由子组件调用
-  ToTradeList = (result, msg) => {
-    if(msg.type==1){
-      this.state.userlist.push(msg)
-    }else if(msg.type==2){
-      this.state.robotlist.push(msg)
+  //根据相关条件过滤库存列表
+  useEffect(()=>{
+    if(userid==1){
+      if(keyword){
+        setCurrentList(filterList)
+      }else{
+        setCurrentList(userGunList)
+      }
+    }else if(userid==2){
+      if(keyword){
+        setCurrentList(filterList)
+      }else{
+        setCurrentList(robotGunList)
+      }
     }
-    this.setState({childrenMsg:this.state.userlist})
-    this.setState({childrenMsg:this.state.robotlist}) 
-  }
-  
-//排序函数
-  compare(property,rev){
-    if(rev==2){
-       return function(a,b){
-            var value1 = a[property];
-            var value2 = b[property];
-            return value1 - value2;
-        } 
-    }else if(rev==1){
-        return function(a,b){
-            var value1 = a[property];
-            var value2 = b[property];
-            return value2 - value1;
-        } 
-    }
-    
-}
-
-  //此方法由子组件调用
-  ToGunlist=((result,msg)=>{
-    if(msg.type==1){
-      this.state.userGunList.push(msg)
-    }else if(msg.type==2){
-      this.state.robotGunList.push(msg)
-    }
-    this.setState({userGunList:this.state.userGunList.sort(this.compare('price',1))})
-    this.setState({robotGunList:this.state.robotGunList.sort(this.compare('price',1))}) 
   })
 
-  render(){
-    return (
-      <div className="App">
+  //库存列表卡片点击回调
+  const ToTradeList = (result, msg) => {
+    ToTradeListFun(msg)
+  }
+
+
+  //交易列表卡片点击回调
+  const ToGunlist=(result,msg)=>{
+    ToGunListFun(msg)
+  }
+
+  //切换库存列表项回调
+  const ChangeList=(result,msg)=>{
+    setuserid(msg)
+  }
+
+  //根据关键词搜索回调
+  const search=(result,filterList,keyword)=>{
+      setfilterlist(filterList)  
+      setkeyword(keyword)
+  }
+
+  return (
+    <div className="App">
         <Header/>
         <Tips/>
-        <Trade userlist={this.state.userlist} robotlist={this.state.robotlist} onChoose={this.ToGunlist}/>
-        <Guninventory onChoose={this.ToTradeList} userGunList={this.state.userGunList} robotGunList={this.state.robotGunList}/>
+        <Trade userlist={userlist} robotlist={robotlist} onChoose={ToGunlist}/>
+        <Guninventory
+         onChoose={ToTradeList} 
+         onUseridClick={ChangeList} 
+         GunList={CurrentList} 
+         search={search}
+        />
         <Footer/>
-      </div>
-    );
-  }
-  
+    </div>
+  );
 }
 
 export default App;

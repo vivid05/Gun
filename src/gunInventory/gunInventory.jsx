@@ -1,91 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component,useState,useEffect } from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
-//import data from '../mock'
-class gunInventory extends Component {
-    constructor(props){
-        super(props)
-        this.state={
-            //Alldata:props.GunList.userdata, //模拟数据
-            //weapondata:props.GunList.userdata,
-            Alldata:props.userGunList,
-            weapondata:props.userGunList,
-            userid:1, //用户和机器人库存识别id
-            rankid:1, //价格升降序识别id
-            price_1:'', //第一个价格输入框的数据
-            list:''
-        }
-        this.handleclick=this.handleclick.bind(this)
-        this.handlerank=this.handlerank.bind(this)
-        this.search=this.search.bind(this)
-        this.price_1Search=this.price_1Search.bind(this)
-        this.price_2Search=this.price_2Search.bind(this)
-        this.compare=this.compare.bind(this)
+function GunInventory(props) {
+    const [userid,setuserid] = useState(1)
+    const [rankid,setrankid] = useState(1)
+    const [keyword,setkeyword] = useState('')
+    const [price_1,setprice_1] = useState()
+    const [price_2,setprice_2] = useState()
+    const [searchList,setsearchlist] = useState([])
+    const [gunList,setgunlist] = useState(props.GunList)  
+
+    //切换用户和机器人库存列表
+    const handleclick=(e)=>{
+        let userid=e.target.getAttribute("data-id")
+        setuserid(userid)
+        props.onUseridClick(this,userid)  
     }
 
-    //页面加载执行价格默认降序排序
-    componentDidMount(){ 
-        this.setState({weapondata:this.state.weapondata.sort(this.compare('price',1))})
-    }
-    
-    //切换用户库存和机器人库存
-    handleclick(e){
-        let id=e.currentTarget.getAttribute("data-id");   
-        if(id==2){
-            this.setState({weapondata:this.props.robotGunList})
-            this.setState({Alldata:this.props.robotGunList}) 
-           //this.setState({weapondata:this.state.data.robotdata})
-           //this.setState({Alldata:this.state.data.robotdata}) 
-        }else if(id==1){
-            this.setState({weapondata:this.props.userGunList})
-            this.setState({Alldata:this.props.userGunList}) 
-            //this.setState({weapondata:this.state.data.userdata})
-            //this.setState({Alldata:this.state.data.userdata}) 
-        }
-        this.setState({userid:e.target.getAttribute("data-id")})
+    //切换排序方式
+    const handlerank=(e)=>{
+        let rankid=e.target.getAttribute("data-rankid")
+        setrankid(rankid)
+        setgunlist(props.GunList.sort(compare('price',rankid)))
     }
 
-    //按照价格排序
-    handlerank(e){
-        let id=e.currentTarget.getAttribute("data-rankid")
-        this.setState({rankid:id})
-        this.setState({weapondata:this.state.weapondata.sort(this.compare('price',id))})
-    }
+    //根据关键词搜索
+    const search=(e)=>{
+        let keyword=e.target.value
+        setkeyword(keyword)
+        let newarr=gunList.filter(item=>{
+            return item.name==keyword
+        })
+        props.search(this,newarr,keyword)
+          
+    } 
 
-    //按照关键词搜索
-    search(e){
-        //this.setState({keyworld:e.target.value})
-        let keyworld=e.target.value;
-        if(keyworld==''){
-            this.setState({weapondata:this.state.Alldata})
-        }else{
-            let newarr=this.state.Alldata.filter(item=>{
-                return item.name==keyworld
-            })
-            this.setState({weapondata:newarr})
+    //加入到交易列表同时删除当前卡片
+    const ToTradeList = (result, msg) => {
+        props.onChoose(this,msg)
+        for(var i=0;i<props.GunList.length;i++){
+            if(props.GunList[i].id==msg.id){
+                props.GunList.splice(i,1)
+            }
         }
-    }
-
-    //根据价格区间筛选
-    price_1Search(e){
-        this.setState({price_1:e.target.value})
-    }
-    price_2Search(e){
-        let price_1=this.state.price_1;
-        let price_2=e.target.value;
-        if(price_2==''){
-            this.setState({weapondata:this.state.Alldata})
-        }else{
-            let newarr=this.state.Alldata.filter(item=>{
-                return item.price>=price_1&&item.price<=price_2
-            })
-            this.setState({weapondata:newarr})
-        }
-   
     }
 
     //比较函数
-    compare(property,rev){
+    const compare=(property,rev)=>{
         if(rev==2){
            return function(a,b){
                 var value1 = a[property];
@@ -102,84 +63,84 @@ class gunInventory extends Component {
         
     }
 
-    //获取子组件的数据，并带参执行父组件的函数
-    ToTradeList = (result, msg) => {
-        this.props.onChoose(this,msg)
-        for(var i=0;i<this.state.weapondata.length;i++){
-            if(this.state.weapondata[i].id==msg.id){
-                this.state.weapondata.splice(i,1)
-            }
-        }
+    const price_1Search=(e)=>{
+        setprice_1(e.target.value)
     }
-    render() {
-        return (
-            <div className="layout inventory">
-                <div className="inventory-tabs">
-                    <ul>
-                        <li onClick={this.handleclick} data-id='1' className={this.state.userid==1?'active':''}>用户库存</li>
-                        <li onClick={this.handleclick} data-id='2' className={this.state.userid==2?'active':''}>机器人库存</li>
-                        <li>使用Tab键快速切换</li>
-                    </ul>
+
+    const price_2Search=(e)=>{
+        let newarr=gunList.filter(item=>{
+            return item.price>=price_1&&item.price<=e.target.value
+        })
+        setsearchlist(newarr)  
+    }
+
+    return (
+        <div className="layout inventory">
+            <div className="inventory-tabs">
+                <ul>
+                    <li onClick={handleclick} data-id='1' className={userid==1?'active':''}>用户库存</li>
+                    <li onClick={handleclick} data-id='2' className={userid==2?'active':''}>机器人库存</li>
+                    <li>使用Tab键快速切换</li>
+                </ul>
+            </div>
+            <div className="filter">
+                <ul>
+                    <li>
+                        <span>类型筛选:</span>
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            所有类型 <span className="caret"></span>
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a href="#">所有类型</a></li>
+                                <li><a href="#">武器</a></li>
+                                <li><a href="#">武器</a></li>
+                                <li><a href="#">武器</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <span>库存显示:</span>
+                        <div className="btn-group">
+                            <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                所有机器人 <span className="caret"></span>
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><a href="#">所有机器人</a></li>
+                                <li><a href="#">机器人</a></li>
+                                <li><a href="#">机器人</a></li>
+                                <li><a href="#">机器人</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>+更多筛选条件</li>
+                </ul>
+            </div>
+            <div className="rank">
+                <ul>
+                    <li data-rankid='1' onClick={handlerank} className={rankid==1?'rankActive':''}>价格↓</li>
+                    <li data-rankid='2' onClick={handlerank} className={rankid==2?'rankActive':''}>价格↑</li>
+                    <li data-rankid='3' onClick={handlerank} className={rankid==3?'rankActive':''}>磨损值↓</li>
+                    <li data-rankid='4' onClick={handlerank} className={rankid==4?'rankActive':''}>磨损值↑</li>
+                </ul>
+                <div className="rank-search">
+                    <input type="text" onChange={search} placeholder="搜索"/>
                 </div>
-                <div className="filter">
-                    <ul>
-                        <li>
-                            <span>类型筛选:</span>
-                            <div className="btn-group">
-                                <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                所有类型 <span className="caret"></span>
-                                </button>
-                                <ul className="dropdown-menu">
-                                    <li><a href="#">所有类型</a></li>
-                                    <li><a href="#">武器</a></li>
-                                    <li><a href="#">武器</a></li>
-                                    <li><a href="#">武器</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>
-                            <span>库存显示:</span>
-                            <div className="btn-group">
-                                <button type="button" className="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    所有机器人 <span className="caret"></span>
-                                </button>
-                                <ul className="dropdown-menu">
-                                    <li><a href="#">所有机器人</a></li>
-                                    <li><a href="#">机器人</a></li>
-                                    <li><a href="#">机器人</a></li>
-                                    <li><a href="#">机器人</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li>+更多筛选条件</li>
-                    </ul>
-                </div>
-                <div className="rank">
-                    <ul>
-                        <li data-rankid='1' onClick={this.handlerank} className={this.state.rankid==1?'rankActive':''}>价格↓</li>
-                        <li data-rankid='2' onClick={this.handlerank} className={this.state.rankid==2?'rankActive':''}>价格↑</li>
-                        <li data-rankid='3' onClick={this.handlerank} className={this.state.rankid==3?'rankActive':''}>磨损值↓</li>
-                        <li data-rankid='4' onClick={this.handlerank} className={this.state.rankid==4?'rankActive':''}>磨损值↑</li>
-                    </ul>
-                    <div className="rank-search">
-                        <input type="text" onChange={this.search} placeholder="搜索"/>
-                    </div>
-                    <div className="money">
-                        <span>¥</span><input value={this.state.price_1} onChange={this.price_1Search} type="text"/>
-                        <i>-</i>
-                        <span>¥</span><input onChange={this.price_2Search} type="text"/>
-                        <h5>刷新库存</h5>
-                    </div>
-                </div>
-                <div className="gunlist">
-                    <div className="gun-wrapper">
-                        {/* 引入武器卡片的组件 */}
-                           <GunCard onChoose={this.ToTradeList} gunlist={this.state.weapondata} />
-                    </div>     
+                <div className="money">
+                    <span>¥</span><input value={price_1||''} onChange={price_1Search} type="text"/>
+                    <i>-</i>
+                    <span>¥</span><input onChange={price_2Search} type="text"/>
+                    <h5>刷新库存</h5>
                 </div>
             </div>
-        );
-    }
+            <div className="gunlist">
+                <div className="gun-wrapper">
+                    {/* 引入武器卡片的组件 */}
+                    <GunCard onChoose={ToTradeList} gunlist={searchList.length==0?props.GunList:searchList} />
+                </div>     
+            </div>
+        </div>
+    )
 }
 
-export default gunInventory;
+export default GunInventory;

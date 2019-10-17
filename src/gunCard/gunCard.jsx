@@ -23,8 +23,8 @@ class gunCard extends Component {
             </div>
         );
         const gunlist = this.props.gunlist
-        const listItems = gunlist.map((item) =>
-            <Popover key={item.id} placement="topLeft" title={text} content={content} arrowPointAtCenter>
+        const listItems = gunlist.map((item,index) =>
+            <Popover key={index} placement="topLeft" title={text} content={content} arrowPointAtCenter>
                 <div onClick={this.toParent.bind(this,item)} className='wrapper'>
                     <div  className="gun-items">
                         <img src={item.imgurl} alt=""/>
