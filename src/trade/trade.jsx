@@ -1,22 +1,16 @@
 import React, { Component,useEffect } from 'react';
 import Guncardsmall from '../guncardsmall/guncardsmall'
-import UseTradeOperation from '../Hooks/useTradeOperation.js'
+import GetTotalPrice from './GetTotalPrice.js'
 import './trade.css'
 
 function Trade(props) {
 
-    const [user_total,robot_total,UseGetTotalFun] = UseTradeOperation.UseGetTotal()  //计算总价Hook
-    const UseDelCardFun = UseTradeOperation.UseDelCard()   //从交易列表删除Hook
+    const [user_total,robot_total] = GetTotalPrice(props.userlist,props.robotlist)  //计算总价
 
-    //实时更新总价
-    useEffect(()=>{
-        UseGetTotalFun(props.userlist,props.robotlist)
-    })
-    
+
     //删除卡片回调
     const delcard = (result,msg) => {
         props.onChoose(this,msg)   
-        UseDelCardFun(props.userlist,props.robotlist,msg)
       }
 
     return (

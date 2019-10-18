@@ -1,61 +1,39 @@
 import React, { Component,useState,useEffect } from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
+import Operation from './Operation.js'
 function GunInventory(props) {
+    const [isUerInventory,setisUerInventory] = useState(true)
     const [userid,setuserid] = useState(1)
     const [rankid,setrankid] = useState(1)
-    const [price_1,setprice_1] = useState()
-    const [gunList,setgunlist] = useState(props.GunList)  
-
-    //切换用户和机器人库存列表
-    const handleclick=(e)=>{
-        let userid=e.target.getAttribute("data-id")
-        setuserid(userid)
-        props.onUseridClick(this,userid)  
+    const [UserInventoryList,RobotInventoryList,ChangeListId,Search,ChangeRank]=Operation(props.UserInventoryList,props.RobotInventoryList)
+    
+    const changeInventoryList=(e)=>{
+        let id=e.target.getAttribute("data-id")
+        ChangeListId(id)
+        setuserid(id)  
     }
 
-    //切换排序方式
-    const handlerank=(e)=>{
-        let rankid=e.target.getAttribute("data-rankid")
-        setrankid(rankid)
-        setgunlist(props.GunList.sort(compare('price',rankid)))
+    const OnChangeRank=(id)=>{
+        setrankid(id)
+        ChangeRank(id)
     }
 
-    //根据关键词搜索
     const search=(e)=>{
         let keyword=e.target.value
-        let newarr=gunList.filter(item=>{
-            return item.name==keyword
-        })
-        props.search(this,newarr)      
-    } 
+        Search(keyword)   
+    }
+
+    const price_2Search=(e)=>{
+         
+    }
+    
+    const [price_1,setprice_1] = useState()
+    const [gunList,setgunlist] = useState(props.GunList)  
 
     //加入到交易列表同时删除当前卡片
     const ToTradeList = (result, msg) => {
         props.onChoose(this,msg)
-        for(var i=0;i<props.GunList.length;i++){
-            if(props.GunList[i].id==msg.id){
-                props.GunList.splice(i,1)
-            }
-        }
-    }
-
-    //比较函数
-    const compare=(property,rev)=>{
-        if(rev==2){
-           return function(a,b){
-                var value1 = a[property];
-                var value2 = b[property];
-                return value1 - value2;
-            } 
-        }else if(rev==1){
-            return function(a,b){
-                var value1 = a[property];
-                var value2 = b[property];
-                return value2 - value1;
-            } 
-        }
-        
     }
 
     const price_1Search=(e)=>{
@@ -63,19 +41,14 @@ function GunInventory(props) {
     }
 
     //通过价格区间筛选
-    const price_2Search=(e)=>{
-        let newarr=gunList.filter(item=>{
-            return item.price>=price_1&&item.price<=e.target.value
-        })
-        props.Pricesel(this,newarr) 
-    }
+    
 
     return (
         <div className="layout inventory">
             <div className="inventory-tabs">
                 <ul>
-                    <li onClick={handleclick} data-id='1' className={userid==1?'active':''}>用户库存</li>
-                    <li onClick={handleclick} data-id='2' className={userid==2?'active':''}>机器人库存</li>
+                    <li onClick={changeInventoryList} data-id='1' className={userid==1?'active':''}>用户库存</li>
+                    <li onClick={changeInventoryList} data-id='2' className={userid==2?'active':''}>机器人库存</li>
                     <li>使用Tab键快速切换</li>
                 </ul>
             </div>
@@ -114,10 +87,10 @@ function GunInventory(props) {
             </div>
             <div className="rank">
                 <ul>
-                    <li data-rankid='1' onClick={handlerank} className={rankid==1?'rankActive':''}>价格↓</li>
-                    <li data-rankid='2' onClick={handlerank} className={rankid==2?'rankActive':''}>价格↑</li>
-                    <li data-rankid='3' onClick={handlerank} className={rankid==3?'rankActive':''}>磨损值↓</li>
-                    <li data-rankid='4' onClick={handlerank} className={rankid==4?'rankActive':''}>磨损值↑</li>
+                    <li data-rankid='1' onClick={()=>OnChangeRank(1)} className={rankid==1?'rankActive':''}>价格↓</li>
+                    <li data-rankid='2' onClick={()=>OnChangeRank(2)} className={rankid==2?'rankActive':''}>价格↑</li>
+                    <li data-rankid='3' onClick={()=>OnChangeRank(3)} className={rankid==3?'rankActive':''}>磨损值↓</li>
+                    <li data-rankid='4' onClick={()=>OnChangeRank(4)} className={rankid==4?'rankActive':''}>磨损值↑</li>
                 </ul>
                 <div className="rank-search">
                     <input type="text" onChange={search} placeholder="搜索"/>
@@ -132,7 +105,7 @@ function GunInventory(props) {
             <div className="gunlist">
                 <div className="gun-wrapper">
                     {/* 引入武器卡片的组件 */}
-                    <GunCard onChoose={ToTradeList} gunlist={props.GunList} />
+                    <GunCard onChoose={ToTradeList} gunlist={isUerInventory?UserInventoryList:RobotInventoryList} />
                 </div>     
             </div>
         </div>

@@ -8,7 +8,41 @@ import Footer from './footer/footer'
 import useBuyOperation from './Hooks/useBuyOperation.js'
 
 function App(props) {
-  const [userlist,robotlist,ToTradeListFun] = useBuyOperation.UseToTradeList()  //交易列表区操作Hook
+  
+  const [
+    UserInventoryList,
+    RobotInventoryList,
+    UserCartList,
+    RobotCartList,
+    AddToCartList,
+    DelFromCartlist
+  ] = useBuyOperation()
+  
+  const addToCartList=(result,item)=>{
+    AddToCartList(item)
+  }
+
+  const delFromCartlist=(result,item)=>{
+    DelFromCartlist(item)
+  }
+
+  return (
+    <div className="App">
+        <Header/>
+        <Tips/>
+        <Trade userlist={UserCartList} robotlist={RobotCartList} onChoose={delFromCartlist}/>
+        <Guninventory
+         onChoose={addToCartList}
+         UserInventoryList={UserInventoryList}
+         RobotInventoryList={RobotInventoryList}
+        /*  search={search}
+         Pricesel={Pricesel} */
+        />
+        <Footer/>
+    </div>
+  );
+
+  /* const [userlist,robotlist,ToTradeListFun] = useBuyOperation.UseToTradeList()  //交易列表区操作Hook
   const [userGunList,robotGunList,ToGunListFun] = useBuyOperation.UseToGunList() //库存列表区操作Hook
   const [CurrentList,setCurrentList] = useState(userGunList) //初始化库存列表
   const [userid,setuserid] = useState(1) //初始化库存id
@@ -68,23 +102,23 @@ function App(props) {
   //根据价格区间筛选回调
   const Pricesel=(result,Newarr)=>{
     setpricefilter(Newarr)
-  }
+  } */
 
-  return (
-    <div className="App">
-        <Header/>
-        <Tips/>
-        <Trade userlist={userlist} robotlist={robotlist} onChoose={ToGunlist}/>
-        <Guninventory
-         onChoose={ToTradeList} 
-         onUseridClick={ChangeList} 
-         GunList={CurrentList} 
-         search={search}
-         Pricesel={Pricesel}
-        />
-        <Footer/>
-    </div>
-  );
+  //return (
+    //<div className="App">
+        //<Header/>
+        //<Tips/>
+        //<Trade userlist={UserCartList} robotlist={RobotCartList} /* onChoose={ToGunlist} *//>
+        //<Guninventory
+         /* onChoose={ToTradeList}
+         onUseridClick={ChangeList} */
+         //GunList={UserInventoryList}
+        /*  search={search}
+         Pricesel={Pricesel} */
+        //>
+        //<Footer/>
+    //</div>
+  //);
 }
 
 export default App;
