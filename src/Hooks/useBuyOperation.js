@@ -3,11 +3,13 @@ import data from '../mock.js'
 
 
 const UseOperation = () => {
-  const [UserCartList,setusercartlist] = useState([])
-  const [RobotCartList,setrobotcartlist] = useState([])
-  const [UserInventoryList,setuserinventorylist] = useState(data.userdata.sort(compare('price',1)))
-  const [RobotInventoryList,setrobotinventorylist] = useState(data.robotdata.sort(compare('price',1)))
+  const [UserCartList,setusercartlist] = useState([]) //初始化用户购物车列表
+  const [RobotCartList,setrobotcartlist] = useState([]) //初始化机器人购物车列表
+  const [UserInventoryList,setuserinventorylist] = useState(data.userdata.sort(compare('price',1))) //初始化用户库存列表，默认降序排序
+  const [RobotInventoryList,setrobotinventorylist] = useState(data.robotdata.sort(compare('price',1))) //初始化机器人库存列表，默认降序排序
 
+
+  //加入到购物车列表
   const AddToCartList=(item)=>{
     if(item.type==1){
       setusercartlist([...UserCartList,item])
@@ -26,6 +28,7 @@ const UseOperation = () => {
     }
   }
 
+  //从购物车列表移除
   const DelFromCartlist=(item)=>{
     if(item.type==1){
       setuserinventorylist([...UserInventoryList,item])
@@ -65,57 +68,6 @@ const UseOperation = () => {
   return [UserInventoryList,RobotInventoryList,UserCartList,RobotCartList,AddToCartList,DelFromCartlist]
 }
 
-
-
-
-/* //加入到交易列表
-function UseToTradeList(){
-    const [userlist,setuserlist]=useState([])
-    const [robotlist,setrobotlist]=useState([])
-    const ToTradeListFun = (item) => {    
-      if(item.type==1){
-        setuserlist([...userlist,item])
-      }else if(item.type==2){
-        setrobotlist([...robotlist, item])
-      }
-    }
-    
-    return  [userlist,robotlist,ToTradeListFun]
-}
-
-//加入到库存列表
-function UseToGunList(){
-    const [NewuserGunList,setusergunlist]=useState(data.userdata)
-    const [NewrobotGunList,setrobotgunlist]=useState(data.robotdata)
-    const ToGunListFun=(item)=>{
-        if(item.type==1){
-            setusergunlist([...NewuserGunList,item])
-          }else if(item.type==2){
-            setrobotgunlist([...NewrobotGunList,item])
-          } 
-          //console.log(NewuserGunList)
-    }
-    return [NewuserGunList.sort(compare('price',1)),NewrobotGunList.sort(compare('price',1)),ToGunListFun]
-}
-
-
-//比较函数
-function compare(property,rev){
-  if(rev==2){
-     return function(a,b){
-          var value1 = a[property];
-          var value2 = b[property];
-          return value1 - value2;
-      } 
-  }else if(rev==1){
-      return function(a,b){
-          var value1 = a[property];
-          var value2 = b[property];
-          return value2 - value1;
-      } 
-  }
-  
-} */
 
 
 export default UseOperation

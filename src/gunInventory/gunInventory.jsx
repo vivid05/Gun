@@ -2,53 +2,25 @@ import React, { Component,useState,useEffect } from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
 import Operation from './Operation.js'
-function GunInventory(props) {
-    const [isUerInventory,setisUerInventory] = useState(true)
-    const [userid,setuserid] = useState(1)
-    const [rankid,setrankid] = useState(1)
-    const [UserInventoryList,RobotInventoryList,ChangeListId,Search,ChangeRank]=Operation(props.UserInventoryList,props.RobotInventoryList)
-    
-    const changeInventoryList=(e)=>{
-        let id=e.target.getAttribute("data-id")
-        ChangeListId(id)
-        setuserid(id)  
-    }
+function GunInventory(props) { 
+    const [price_1,setprice_1] = useState() //初始化价格输入框的值 
 
-    const OnChangeRank=(id)=>{
-        setrankid(id)
-        ChangeRank(id)
-    }
-
-    const search=(e)=>{
-        let keyword=e.target.value
-        Search(keyword)   
-    }
-
-    const price_2Search=(e)=>{
-         
-    }
-    
-    const [price_1,setprice_1] = useState()
-    const [gunList,setgunlist] = useState(props.GunList)  
-
-    //加入到交易列表同时删除当前卡片
-    const ToTradeList = (result, msg) => {
-        props.onChoose(this,msg)
-    }
-
-    const price_1Search=(e)=>{
-        setprice_1(e.target.value)
-    }
-
-    //通过价格区间筛选
-    
+    const [
+        CurrentInventoryList, //当前渲染列表
+        ListId, //库存列表项id
+        RankId, //价格排序方式id
+        ChangeListId, //改变库存列表项回调
+        Search, //通过关键词过滤回调
+        ChangeRank, //改变价格排序回调
+        PriceSel //通过价格区间过滤回调
+    ]=Operation(props.UserInventoryList,props.RobotInventoryList)  
 
     return (
         <div className="layout inventory">
             <div className="inventory-tabs">
                 <ul>
-                    <li onClick={changeInventoryList} data-id='1' className={userid==1?'active':''}>用户库存</li>
-                    <li onClick={changeInventoryList} data-id='2' className={userid==2?'active':''}>机器人库存</li>
+                    <li onClick={()=>ChangeListId(1)} className={ListId==1?'active':''}>用户库存</li>
+                    <li onClick={()=>ChangeListId(2)} className={ListId==2?'active':''}>机器人库存</li>
                     <li>使用Tab键快速切换</li>
                 </ul>
             </div>
@@ -87,25 +59,25 @@ function GunInventory(props) {
             </div>
             <div className="rank">
                 <ul>
-                    <li data-rankid='1' onClick={()=>OnChangeRank(1)} className={rankid==1?'rankActive':''}>价格↓</li>
-                    <li data-rankid='2' onClick={()=>OnChangeRank(2)} className={rankid==2?'rankActive':''}>价格↑</li>
-                    <li data-rankid='3' onClick={()=>OnChangeRank(3)} className={rankid==3?'rankActive':''}>磨损值↓</li>
-                    <li data-rankid='4' onClick={()=>OnChangeRank(4)} className={rankid==4?'rankActive':''}>磨损值↑</li>
+                    <li onClick={()=>ChangeRank(1)} className={RankId==1?'rankActive':''}>价格↓</li>
+                    <li onClick={()=>ChangeRank(2)} className={RankId==2?'rankActive':''}>价格↑</li>
+                    <li onClick={()=>ChangeRank(3)} className={RankId==3?'rankActive':''}>磨损值↓</li>
+                    <li onClick={()=>ChangeRank(4)} className={RankId==4?'rankActive':''}>磨损值↑</li>
                 </ul>
                 <div className="rank-search">
-                    <input type="text" onChange={search} placeholder="搜索"/>
+                    <input type="text" onChange={(e)=>Search(e.target.value)} placeholder="搜索"/>
                 </div>
                 <div className="money">
-                    <span>¥</span><input value={price_1||''} onChange={price_1Search} type="text"/>
+                    <span>¥</span><input value={price_1||''} onChange={(e)=>setprice_1(e.target.value)} type="text"/>
                     <i>-</i>
-                    <span>¥</span><input onChange={price_2Search} type="text"/>
+                    <span>¥</span><input onChange={(e)=>PriceSel([price_1,e.target.value])} type="text"/>
                     <h5>刷新库存</h5>
                 </div>
             </div>
             <div className="gunlist">
                 <div className="gun-wrapper">
                     {/* 引入武器卡片的组件 */}
-                    <GunCard onChoose={ToTradeList} gunlist={isUerInventory?UserInventoryList:RobotInventoryList} />
+                    <GunCard onChoose={(result,item)=>props.onChoose(this,item)} gunlist={CurrentInventoryList} />
                 </div>     
             </div>
         </div>
