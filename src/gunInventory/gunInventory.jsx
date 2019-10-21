@@ -1,4 +1,4 @@
-import React, { Component,useState,useEffect } from 'react';
+import React,{useState} from 'react';
 import GunCard from '../gunCard/gunCard';
 import './gunInventory.css'
 import Operation from './Operation.js'
@@ -77,7 +77,7 @@ function GunInventory(props) {
             <div className="gunlist">
                 <div className="gun-wrapper">
                     {/* 引入武器卡片的组件 */}
-                    <GunCard onChoose={(result,item)=>props.onChoose(this,item)} gunlist={CurrentInventoryList} />
+                    <GunCard AddToCartList={(result,item)=>props.AddToCartList(item)} gunlist={CurrentInventoryList} />
                 </div>     
             </div>
         </div>

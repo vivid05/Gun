@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import  { useState } from 'react';
 import data from '../mock.js'
-
 
 const UseOperation = () => {
   const [UserCartList,setusercartlist] = useState([]) //初始化用户购物车列表
@@ -13,18 +12,18 @@ const UseOperation = () => {
   const AddToCartList=(item)=>{
     if(item.type==1){
       setusercartlist([...UserCartList,item])
-      for(var i=0;i<UserInventoryList.length;i++){
-        if(UserInventoryList[i].id==item.id){
-          UserInventoryList.splice(i,1)
+      UserInventoryList.forEach((element,index) => {
+        if(element.id==item.id){
+          UserInventoryList.splice(index,1)
         }
-    }
+      });
     }else if(item.type==2){
       setrobotcartlist([...RobotCartList,item])
-      for(var i=0;i<RobotInventoryList.length;i++){
-        if(RobotInventoryList[i].id==item.id){
-          RobotInventoryList.splice(i,1)
+      RobotInventoryList.forEach((element,index) => {
+        if(element.id==item.id){
+          RobotInventoryList.splice(index,1)
         }
-      }
+      });
     }
   }
 
@@ -32,18 +31,18 @@ const UseOperation = () => {
   const DelFromCartlist=(item)=>{
     if(item.type==1){
       setuserinventorylist([...UserInventoryList,item])
-      for(var i=0;i<UserCartList.length;i++){
-        if(UserCartList[i].id==item.id){
-          UserCartList.splice(i,1)
+      UserCartList.forEach((element,index) => {
+        if(element.id==item.id){
+          UserCartList.splice(index,1)
         }
-    }
+      });
     }else if(item.type==2){
       setrobotinventorylist([...RobotInventoryList,item])
-      for(var i=0;i<RobotCartList.length;i++){
-        if(RobotCartList[i].id==item.id){
-          RobotCartList.splice(i,1)
+      RobotCartList.forEach((element,index) => {
+        if(element.id==item.id){
+          RobotCartList.splice(index,1)
         }
-      }
+      });
     }
   }
 

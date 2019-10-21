@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from 'react';
-
 //统计交易列表总价
 const UseGetTotal=(userlist,robotlist)=>{ 
         let userarr=[0]
@@ -20,6 +18,5 @@ const UseGetTotal=(userlist,robotlist)=>{
     return [usertotal,robottotal]  
 }
 
-//从交易列表删除
 
 export default UseGetTotal

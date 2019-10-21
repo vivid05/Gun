@@ -1,4 +1,4 @@
-import React, { Component,useState,useEffect } from 'react';
+import React from 'react';
 import Header from './header/header'
 import './App.css';
 import Tips from './tips/tips';
@@ -7,7 +7,7 @@ import Guninventory from './gunInventory/gunInventory';
 import Footer from './footer/footer'
 import useBuyOperation from './Hooks/useBuyOperation.js'
 
-function App(props) {
+function App() {
   
   const [
     UserInventoryList, //用户库存列表
@@ -22,9 +22,9 @@ function App(props) {
     <div className="App">
         <Header/>
         <Tips/>
-        <Trade userlist={UserCartList} robotlist={RobotCartList} onChoose={(result,item)=>DelFromCartlist(item)}/>
+        <Trade userlist={UserCartList} robotlist={RobotCartList} DelFromCartlist={(item)=>DelFromCartlist(item)}/>
         <Guninventory
-         onChoose={(result,item)=>AddToCartList(item)}
+         AddToCartList={(item)=>AddToCartList(item)}
          UserInventoryList={UserInventoryList}
          RobotInventoryList={RobotInventoryList}
         />

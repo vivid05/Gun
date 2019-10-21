@@ -7,12 +7,12 @@ import 'antd/es/button/style/css';
 class gunCard extends Component {
     constructor(props){
         super(props)
-        this.toParent=this.toParent.bind(this)
+        this.AddToCartList=this.AddToCartList.bind(this)
     }
 
-    //加入仓库
-    toParent(data){
-        this.props.onChoose(this,data)
+    //加入购物车
+    AddToCartList(data){
+        this.props.AddToCartList(this,data)
     }
      
     render() {
@@ -26,7 +26,7 @@ class gunCard extends Component {
         const gunlist = this.props.gunlist
         const listItems = gunlist.map((item,index) =>
             <Popover key={index} placement="topLeft" title={text} content={content} arrowPointAtCenter>
-                <div onClick={this.toParent.bind(this,item)} className='wrapper'>
+                <div onClick={this.AddToCartList.bind(this,item)} className='wrapper'>
                     <div  className="gun-items">
                         <img src={item.imgurl} alt=""/>
                         <p>{item.dec}</p>

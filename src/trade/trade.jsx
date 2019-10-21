@@ -1,4 +1,4 @@
-import React, { Component,useEffect } from 'react';
+import React from 'react';
 import Guncardsmall from '../guncardsmall/guncardsmall'
 import GetTotalPrice from './GetTotalPrice.js'
 import './trade.css'
@@ -33,7 +33,7 @@ function Trade(props) {
                     <p>在 '用户库存' 中选择你要换出的饰品</p>
                     <div className="show">
                         {/* 引入武器小卡片组件并传入用户库存列表 */}
-                        <Guncardsmall delcard={(result,msg)=>props.onChoose(this,msg)} gunlist={props.userlist}/>
+                        <Guncardsmall delcard={(result,msg)=>props.DelFromCartlist(msg)} gunlist={props.userlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥{user_total}</p>
@@ -45,7 +45,7 @@ function Trade(props) {
                     <p>在 '机器人库存' 中选择你要换入的饰品</p>
                     <div className="show">
                         {/* 引入武器小卡片组件并传入机器人库存列表 */}
-                        <Guncardsmall delcard={(result,msg)=>props.onChoose(this,msg)} gunlist={props.robotlist}/>
+                        <Guncardsmall delcard={(result,msg)=>props.DelFromCartlist(msg)} gunlist={props.robotlist}/>
                     </div>
                     <div className="content-price">
                         <p className="fl">总价：￥{robot_total}</p>
